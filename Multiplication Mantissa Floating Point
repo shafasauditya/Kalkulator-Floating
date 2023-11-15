@@ -1,0 +1,43 @@
+Library ieee;
+
+ENTITY MantissaMulti IS	
+
+	PORT(X, Y : IN Bit_Vector (9 DOWNTO 0);
+		 C: OUT Bit_Vector (19 DOWNTO 0 ));
+
+END MantissaMulti; 
+
+ARCHITECTURE behavioral OF MantissaMulti IS
+	SIGNAL Z: Bit_Vector (19 DOWNTO 0);
+BEGIN 
+loopmantissa :
+	FOR i IN 9 LOOP
+		IF Y[i] = '0' THEN
+			Z <= '00000000000000000000';
+		ELSE IF Y[i] = '1' THEN
+			IF i = '0' THEN 
+				Z = '000000000' & X ;
+			ELSE IF i = '1' THEN 
+				Z = '00000000' & X & '0' ;
+			ELSE IF i = '2' THEN 
+				Z = '0000000' & X & '00' ; 
+			ELSE IF i = '3' THEN
+				Z = '000000' & X & '000' ;
+			ELSE IF i = '4' THEN 
+				Z = '00000' & X & '0000' ;
+			ELSE IF i = '5' THEN 
+				Z = '0000' & X & '00000' ;
+			ELSE IF i = '6' THEN 
+				Z = '000' & X & '000000' ;
+			ELSE IF i = '7' THEN  
+				Z = '00' & X & '0000000' ;
+			ELSE IF i = '8' THEN 
+				Z = '0' & X & '00000000' ;
+			ELSE IF i = '9' THEN 
+				Z = X '000000000'; 
+			END IF ;
+			END IF ; 
+			C = Z + C
+		
+		END loop loopmantissa;
+	
